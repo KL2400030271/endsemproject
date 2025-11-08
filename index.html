@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MindCare - Login</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #6C63FF, #42A5F5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    /* Top Ribbon */
+    .top-ribbon {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: linear-gradient(90deg, #4267B2, #365899);
+        color: white;
+        display: flex;
+        align-items: center;
+        padding: 12px 20px;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .top-ribbon .logo {
+        width: 45px;
+        height: 45px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        color: #4267B2;
+        margin-right: 15px;
+        font-size: 20px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .top-ribbon h1 {
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    .login-container {
+        display: flex;
+        width: 90%;
+        max-width: 1100px;
+        height: 700px;
+        margin-top: 70px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+        background-color: white;
+    }
+
+    /* Left Panel */
+    .login-form-panel {
+        flex: 2;
+        padding: 50px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: #333;
+        background: #ffffff;
+    }
+
+    /* User/Admin Toggle */
+    .toggle-container {
+        position: relative;
+        background-color: #f0f0f0;
+        border-radius: 50px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 30px;
+        border: 1px solid #ddd;
+        width: 240px;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .toggle-container input[type="radio"] {
+        display: none;
+    }
+
+    .toggle-label {
+        padding: 12px 0;
+        cursor: pointer;
+        z-index: 2;
+        transition: color 0.3s ease;
+        font-weight: 600;
+        color: #555;
+        text-align: center;
+        font-size: 16px;
+    }
+
+    .slider {
+        position: absolute;
+        height: 100%;
+        width: 50%;
+        background: linear-gradient(90deg, #4267B2, #365899);
+        border-radius: 50px;
+        top: 0;
+        left: 0;
+        transition: transform 0.3s ease-in-out;
+        z-index: 1;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #user-toggle:checked ~ .slider {
+        transform: translateX(0%);
+    }
+
+    #admin-toggle:checked ~ .slider {
+        transform: translateX(100%);
+    }
+
+    #user-toggle:checked + .toggle-label {
+        color: white;
+    }
+
+    #admin-toggle:checked + .toggle-label {
+        color: white;
+    }
+
+    .input-group {
+        margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+        width: 100%;
+        padding: 15px 15px;
+        border: none;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+        font-size: 16px;
+        outline: none;
+        transition: box-shadow 0.3s, border 0.3s;
+    }
+
+    input:focus {
+        border: 1px solid #4267B2;
+        box-shadow: 0 0 5px rgba(66, 103, 178, 0.4);
+    }
+
+    input::placeholder {
+        color: #aaa;
+    }
+
+    .forgot-password {
+        display: block;
+        font-size: 14px;
+        color: #4267B2;
+        text-decoration: none;
+        margin-bottom: 25px;
+        font-weight: 500;
+    }
+
+    .forgot-password:hover {
+        text-decoration: underline;
+    }
+
+    .submit-button {
+        width: 100%;
+        padding: 16px;
+        background: linear-gradient(90deg, #4267B2, #365899);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s, transform 0.2s;
+    }
+
+    .submit-button:hover {
+        background: linear-gradient(90deg, #365899, #4267B2);
+        transform: translateY(-2px);
+    }
+
+    .contact-footer {
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .contact-footer p {
+        font-size: 14px;
+        color: #666;
+    }
+
+    .contact-email {
+        font-size: 14px;
+        color: #4267B2;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .contact-email:hover {
+        text-decoration: underline;
+    }
+
+    .copyright {
+        font-size: 12px;
+        color: #aaa;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    /* Right Panel */
+    .featured-panel {
+        flex: 3;
+        position: relative;
+        background-image: url('https://images.unsplash.com/photo-1506765515384-028b60a970df?auto=format&fit=crop&w=800&q=80');
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .card-overlay {
+        position: absolute;
+        width: 70%;
+        max-width: 450px;
+        padding: 30px;
+        background-color: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        color: white;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .card-title {
+        font-size: 26px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .card-text {
+        font-size: 15px;
+        opacity: 0.95;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 900px) {
+        .login-container {
+            flex-direction: column;
+            height: auto;
+            max-width: 500px;
+        }
+        .featured-panel {
+            display: none;
+        }
+        .login-form-panel {
+            padding: 30px;
+        }
+    }
+</style>
+</head>
+<body>
+
+    <!-- Top Ribbon -->
+    <div class="top-ribbon">
+        <div class="logo">M</div>
+        <h1>MindCare</h1>
+    </div>
+
+    <div class="login-container">
+        <div class="login-form-panel">
+
+            <!-- Toggle Slider -->
+            <div class="toggle-container">
+                <input type="radio" id="user-toggle" name="role" value="user" checked>
+                <label for="user-toggle" class="toggle-label">User</label>
+
+                <input type="radio" id="admin-toggle" name="role" value="admin">
+                <label for="admin-toggle" class="toggle-label">Admin</label>
+
+                <div class="slider"></div>
+            </div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username or Email" required>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                
+                <a href="#" class="forgot-password">Forgot Password?</a>
+
+                <button type="submit" class="submit-button">Login</button>
+            </form>
+
+            <footer class="contact-footer">
+                <p>Need help? Contact us:</p>
+                <a href="mailto:support@mindcare.com" class="contact-email">support@mindcare.com</a>
+            </footer>
+
+            <p class="copyright">
+                © MindCare Technologies 2025
+            </p>
+        </div>
+
+        <div class="featured-panel">
+            <div class="card-overlay">
+                <h3 class="card-title">Your Mental Health Matters</h3>
+                <p class="card-text">
+                    MindCare provides personalized mental health support for a healthier, happier life.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link to JavaScript -->
+    <script src="login.js"></script>
+</body>
+</html>
